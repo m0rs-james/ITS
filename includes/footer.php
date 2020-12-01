@@ -37,10 +37,7 @@
         </div>
     </div>
 
-<!-- Scripts -->
-<?php
-    include 'includes/scripts.html';
-?>
+
 
 </body>
 
