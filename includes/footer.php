@@ -39,10 +39,9 @@
     </div>
 
     <?php
-        include '../includes/scripts.html';
+        include '../includes/scripts.php';
     ?>
-   
-
+    
 </body>
 
 </html>
