@@ -26,8 +26,8 @@ include '../config/connection.php';
             <div class="modal-body">
 
                 <div class="form-group">
-                    <label> Category Name </label>
-                    <input type="text" name="category_name" class="form-control" placeholder="Enter Category Name">
+                    <label> Brand Name </label>
+                    <input type="text" name="category_name" class="form-control" placeholder="Enter Brand Name">
                 </div>
                 
             </div>
@@ -47,7 +47,7 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Category Data</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Update Category Data</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -158,7 +158,7 @@ include '../config/connection.php';
 </div>
 
 
-<!-- ajax script for popup modal -->
+<!-- ajax script for popup modal & sweetAlert -->
 <?php
     include '../includes/scripts2.php';
 ?>

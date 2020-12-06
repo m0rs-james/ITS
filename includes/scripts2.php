@@ -2,7 +2,6 @@
     <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
 
     <!-- SweetAlert -->
-    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
     <script src="../js/sweetalert.min.js"></script>
     <?php
         
