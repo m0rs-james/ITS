@@ -1,7 +1,9 @@
 <?php
+
+
 include '../includes/header.php';
 include '../includes/sidebar.html';
-include '../includes/topbar.html';
+include '../includes/topbar.php';
 
 include '../config/connection.php';
 ?>
@@ -27,7 +29,7 @@ include '../config/connection.php';
 
                 <div class="form-group">
                     <label> Brand Name </label>
-                    <input type="text" name="category_name" class="form-control" placeholder="Enter Brand Name">
+                    <input type="text" name="category_name" class="form-control" placeholder="Enter Brand Name" required>
                 </div>
                 
             </div>
@@ -61,7 +63,7 @@ include '../config/connection.php';
 
                 <div class="form-group">
                     <label> Category Name </label>
-                    <input type="text" name="category_name" id="categoryName" class="form-control" placeholder="Enter New Category Name">
+                    <input type="text" name="category_name" id="categoryName" class="form-control" placeholder="Enter New Category Name" required>
                 </div>
                 
             </div>

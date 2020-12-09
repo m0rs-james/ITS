@@ -1,7 +1,9 @@
 <?php
+
+
 include '../includes/header.php';
 include '../includes/sidebar.html';
-include '../includes/topbar.html';
+include '../includes/topbar.php';
 ?>
 
 <!-- Content Wrapper -->

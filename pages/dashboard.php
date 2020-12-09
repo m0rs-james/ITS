@@ -1,12 +1,10 @@
-<!-- 
-    Includes
- -->
 <?php
+
+    
     include '../includes/header.php';
     include '../includes/sidebar.html';
-    include '../includes/topbar.html';
+    include '../includes/topbar.php';
 ?>
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -196,6 +194,10 @@
 </div>
 <!-- /.container-fluid -->
 
+<!-- ajax script for popup modal & sweetAlert -->
+<?php
+    include '../includes/scripts2.php';
+?>
 
 <!-- End of Main Content -->
 

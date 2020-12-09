@@ -1,53 +1,81 @@
 <?php
+
+
 include '../includes/header.php';
 include '../includes/sidebar.html';
-include '../includes/topbar.html';
+include '../includes/topbar.php';
+
+include '../config/connection.php';
 ?>
 
 <!-- Content Wrapper -->
 
 <div id="content-wrapper" class="d-flex flex-column">
 
-    <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Add Product -->
+    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Role Data</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add Product Data</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         
-        <form action="code.php" method="POST">
+        <form action="../process/productProcess.php?action=add" method="POST">
             
 
             <div class="modal-body">
 
                 <div class="form-group">
                     <label> Product Name </label>
-                    <input type="text" name="username" class="form-control" placeholder="Enter Product Name">
+                    <input type="text" name="product_name" class="form-control" placeholder="Enter Product Name" required>
+                </div>
+                <div class="form-group">
+                    <label> Product Description </label>
+                    <input type="text" name="product_description" class="form-control" placeholder="Enter Product Description">
                 </div>
                 <div class="form-group">
                     <label>Brand</label>
-                    <select name="" id="" class="form-control">
-                        <option value="">Safeguard</option>
-                        <option value="">Dove</option>
+                    <select name="brand_id"  class="form-control" required>
+                        <option value="">Choose the brand of the product</option>
+                        <?php 
+                        $sql = "SELECT * FROM brand ORDER BY brand_name";
+                        $result = mysqli_query($db, $sql) or die (mysqli_error($db));
+
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <option value="<?php echo $row['brand_id']?>"><?php echo $row['brand_name']?></option>
+                            <?php 
+                        }
+                        ?>
                     </select>
+                   
                 </div>
                 <div class="form-group">
                     <label>Category</label>
-                    <select name="" id="" class="form-control">
-                        <option value="">Soap</option>
-                        <option value="">Shampoo</option>
+                    <select name="category_id"  class="form-control" required>
+                    <option value="">Choose the category of the product</option>
+                        <?php 
+                        $sql = "SELECT * FROM category ORDER BY category_name";
+                        $result = mysqli_query($db, $sql) or die (mysqli_error($db));
+
+                        while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                            <option value="<?php echo $row['category_id'] ?>"><?php echo $row['category_name'] ?></option>
+                            <?php
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label> Price </label>
-                    <input type="text" name="username" class="form-control" placeholder="Enter Product Price">
+                    <input type="number" step="any" name="product_price" class="form-control" placeholder="Enter Product Price" required>
                 </div>
                 <div class="form-group">
                     <label> Quantity </label>
-                    <input type="text" name="username" class="form-control" placeholder="Enter Product Quantity">
+                    <input type="number" name="product_quantity" class="form-control" placeholder="Enter Product Quantity" required>
                 </div>
                 
             </div>
@@ -61,12 +89,122 @@ include '../includes/topbar.html';
     </div>
     </div>
 
+    <!-- Edit Product -->
+    <div class="modal fade" id="editProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Product Data</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        <form action="../process/productProcess.php?action=edit" method="POST">
+            
+
+            <div class="modal-body">
+
+                <input type="hidden" name="product_id" id="productId">
+
+                <div class="form-group">
+                    <label> Product Name </label>
+                    <input type="text" name="product_name" id="productName" class="form-control" placeholder="Enter Product Name" required>
+                </div>
+                <div class="form-group">
+                    <label> Product Description </label>
+                    <input type="text" name="product_description" id="productDescription" class="form-control" placeholder="Enter Product Description">
+                </div>
+                <div class="form-group">
+                    <label>Brand</label>
+                    <select name="brand_id" class="form-control" required>
+                        <option value="">Choose the brand of the product</option>
+                        <?php 
+                        $sql = "SELECT * FROM brand ORDER BY brand_name";
+                        $result = mysqli_query($db, $sql) or die (mysqli_error($db));
+
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <option value="<?php echo $row['brand_id']?>"><?php echo $row['brand_name']?></option>
+                            <?php 
+                        }
+                        ?>
+                    </select>
+                   
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category_id"  class="form-control" required>
+                        <option value="">Choose the category of the product</option>
+                            <?php 
+                            $sql = "SELECT * FROM category ORDER BY category_name";
+                            $result = mysqli_query($db, $sql) or die (mysqli_error($db));
+
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                <option value="<?php echo $row['category_id'] ?>"><?php echo $row['category_name'] ?></option>
+                                <?php
+                            }
+                            ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label> Price </label>
+                    <input type="number" step="any" name="product_price" id="productPrice" class="form-control" placeholder="Enter Product Price" required>
+                </div>
+                <div class="form-group">
+                    <label> Quantity </label>
+                    <input type="number" name="product_quantity" id="productQuantity" class="form-control" placeholder="Enter Product Quantity" required>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" name="editbtn" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+    </div>
+
+    <!-- Delete Brand Modal -->
+    <div class="modal fade" id="deleteProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Product Data</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        <form id="deleteBrand" action="../process/productProcess.php?action=delete" method="POST">
+            
+
+            <div class="modal-body">
+
+                <input type="hidden" name="product_id" id="deleteId">
+
+                <h4>Do you want to delete this Product?</h4>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" name="deleteproductbtn" class="btn btn-danger">Yes</button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+    </div>
+
     <div class="contatiner-fluid">
         <!-- Tables -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold- text-primary"> Product
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProduct">
                         Add Product
                     </button>
                 </h6>
@@ -77,23 +215,39 @@ include '../includes/topbar.html';
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Product ID</th>
                                 <th>Product Name</th>
-                                <th>Brand</th>
+                                <th>Description</th>
                                 <th>Category</th>
+                                <th>Brand</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>changes</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Safeguard Fresh Green soap with Family Germ Protection</td>
-                                <td>Safeguard</td>
-                                <td>Soap</td>
-                                <td>₱50.00</td>
-                                <td>420</td>
-                                <td><button class="btn btn-info">Edit</button>&nbsp<button class="btn btn-danger">Delete</button></td>
-                            </tr>
+                            <?php
+                            // Join Category and Brand table to Product table using INNER JOIN
+                                $sql = "SELECT * FROM product INNER JOIN brand ON product.brand_id = brand.brand_id 
+                                INNER JOIN category ON product.category_id = category.category_id ORDER BY product_id";
+                                $result = mysqli_query($db, $sql) or die (mysqli_error($sql));
+
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $row['product_id'] ?></td>
+                                            <td><?php echo $row['product_name'] ?></td>
+                                            <td><?php echo $row['product_description'] ?></td>
+                                            <td><?php echo $row['category_name'] ?></td>
+                                            <td><?php echo $row['brand_name'] ?></td>
+                                            <td><?php echo $row['product_price'] ?></td>
+                                            <td><?php echo $row['product_quantity'] ?></td>
+                                            <td><button class="btn editbtn btn-info">Edit</button>&nbsp
+                                            <button class="btn deletebtn btn-danger">Delete</button></td>
+                                        </tr>
+                                    <?php
+                                }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -104,6 +258,67 @@ include '../includes/topbar.html';
 
 <!-- This div is not connected to anything but it fixes the position of the footer -->
 </div>
+
+<!-- ajax script for popup modal & sweetAlert -->
+<?php
+    include '../includes/scripts2.php';
+?>
+
+<!-- Edit script (jQuery) -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.editbtn').on('click', function() {
+            $('#editProduct').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#productId').val(data[0]);
+            $('#productName').val(data[1]);
+            $('#productDescription').val(data[2]);
+            $('#brandId').val(data[3]);
+            $('#categoryId').val(data[4]);
+            $('#productPrice').val(data[5]);
+            $('#productQuantity').val(data[6]);
+            
+
+        });
+    });
+</script>
+
+<!-- Delete script (jQuery) -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.deletebtn').on('click', function() {
+            $('#deleteProduct').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#deleteId').val(data[0]);
+        });
+    });
+</script>
+
+<!-- Editable Select -->
+<!-- <script src="//code.jquery.com/jquery-latest.min.js"></script> -->
+<!-- <script src="jquery.editable-select.js"></script>
+<script type="text/javascript">
+  
+        $('#brandId').editableSelect();
+        $('#categoryId').editableSelect();
+
+</script> -->
 
 <!-- End of contatiner fluid -->
 

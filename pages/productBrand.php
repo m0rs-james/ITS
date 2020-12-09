@@ -1,7 +1,9 @@
 <?php
+
+
 include '../includes/header.php';
 include '../includes/sidebar.html';
-include '../includes/topbar.html';
+include '../includes/topbar.php';
 
 include '../config/connection.php';
 ?>
@@ -28,7 +30,7 @@ include '../config/connection.php';
 
                 <div class="form-group">
                     <label> Brand Name </label>
-                    <input type="text" name="brand_name" class="form-control" placeholder="Enter Brand Name">
+                    <input type="text" name="brand_name" class="form-control" placeholder="Enter Brand Name" required>
                 </div>
                 
             </div>
@@ -62,13 +64,13 @@ include '../config/connection.php';
 
                 <div class="form-group">
                     <label> Brand Name </label>
-                    <input type="text" name="brand_name" id="brandName" class="form-control" placeholder="Enter New Brand Name">
+                    <input type="text" name="brand_name" id="brandName" class="form-control" placeholder="Enter New Brand Name" required>
                 </div>
                 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" name="editbrandbtn" class="btn btn-primary">Save</button>
+                <button type="submit" name="editbrandbtn" class="btn btn-primary">Update</button>
             </div>
         </form>
 
@@ -116,49 +118,7 @@ include '../config/connection.php';
                         Add Brand
                     </button>
                 </h6>
-                <!-- edit add Search -->
-                    
-                <!-- <div class="search-rx">
-                            <form
-                                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                        aria-label="Search" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form> -->
-							
-							<!-- <ul class="navbar-nav ml-auto"> -->
-								 <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-								<!-- <li class="nav-item dropdown no-arrow d-sm-none">
-									<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="fas fa-search fa-fw"></i>
-									</a> -->
-									<!-- Dropdown - Messages -->
-									
-                                <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                    aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto w-100 navbar-search">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control bg-light border-0 small"
-                                                placeholder="Search for..." aria-label="Search"
-                                                aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fas fa-search fa-sm"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>	
-                    </div> -->
+
             </div>
             <div class="card-body">
                 <div class="table-responsive">
