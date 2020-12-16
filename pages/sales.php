@@ -247,7 +247,6 @@ include '../config/connection.php';
                                 <th>Total Quantity</th>
                                 <th>Total Price</th>
                                 <th>Sales Date</th>
-                                <th>Receipt</th>
                                 <th>changes</th>
                             </tr>
                         </thead>
@@ -275,9 +274,8 @@ include '../config/connection.php';
                                         <!-- format date to example: Dec 12, 2020 -->
                                         <td><?php $date = new DateTime($row['sales_date']); echo $date->format('F j, Y'); ?></td>
                                         <!-- sales Status -->
-                                        <td><a href="../pages/viewOrder.php?id=<?php echo $row['sales_id']?>" class="btn btn-secondary">View Receipt</a></td>
-                                        <td><button class="btn editbtn btn-info">Edit</button>&nbsp
-                                        <button class="btn deletebtn btn-danger">Delete</button></td>
+                                        <td><a href="../pages/viewOrder.php?id=<?php echo $row['sales_id']?>" class="btn btn-info"><i class="fas fa-receipt"></i>Receipt</a>&nbsp
+                                        <button class="btn deletebtn btn-danger"><i class="fas fa-trash-alt"></i>Delete</button></td>
                                     </tr>
                                     <?php
                                 }
