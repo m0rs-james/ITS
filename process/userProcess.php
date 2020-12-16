@@ -1,14 +1,15 @@
 <?php 
 
-    include '../config/connection.php';
+    require '../config/connection.php';
+    require '../validation/validation.php';
 
     switch ($_GET['action']) {
 
         case 'add':
-            $firstName = $_POST['first_name'];
-            $lastName = $_POST['last_name'];
-            $address = $_POST['user_address'];
-            $phoneNumber = $_POST['user_number'];
+            $firstName = validation($_POST['first_name']);
+            $lastName = validation($_POST['last_name']);
+            $address = validation($_POST['user_address']);
+            $phoneNumber = validation($_POST['user_number']);
 
 
             $stmt = "INSERT INTO users (first_name, last_name, user_address, user_number)

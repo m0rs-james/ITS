@@ -1,6 +1,4 @@
 <?php
-
-
 include '../includes/header.php';
 include '../includes/sidebar.html';
 include '../includes/topbar.php';
@@ -32,11 +30,12 @@ include '../config/connection.php';
                     <label> Product Name </label>
                     <input type="text" name="product_name" class="form-control" placeholder="Enter Product Name" required>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label> Product Description </label>
                     <input type="text" name="product_description" class="form-control" placeholder="Enter Product Description">
-                </div>
-                <div class="form-group">
+                </div> -->
+                <!-- Brand is temporarly not available -->
+                <!-- <div class="form-group">
                     <label>Brand</label>
                     <select name="brand_id"  class="form-control" required>
                         <option value="">Choose the brand of the product</option>
@@ -52,10 +51,10 @@ include '../config/connection.php';
                         ?>
                     </select>
                    
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label>Category</label>
-                    <select name="category_id"  class="form-control" required>
+                    <select name="category_id" id="#category" class="form-control" required>
                     <option value="">Choose the category of the product</option>
                         <?php 
                         $sql = "SELECT * FROM category ORDER BY category_name";
@@ -68,6 +67,10 @@ include '../config/connection.php';
                         }
                         ?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label> Product Size </label>
+                    <input type="text" name="product_size" class="form-control" placeholder="Enter Product Size">
                 </div>
                 <div class="form-group">
                     <label> Price </label>
@@ -101,7 +104,6 @@ include '../config/connection.php';
         </div>
         
         <form action="../process/productProcess.php?action=edit" method="POST">
-            
 
             <div class="modal-body">
 
@@ -111,11 +113,13 @@ include '../config/connection.php';
                     <label> Product Name </label>
                     <input type="text" name="product_name" id="productName" class="form-control" placeholder="Enter Product Name" required>
                 </div>
-                <div class="form-group">
+                <!-- Product Description is temporarily unavailable -->
+                <!-- <div class="form-group">
                     <label> Product Description </label>
                     <input type="text" name="product_description" id="productDescription" class="form-control" placeholder="Enter Product Description">
-                </div>
-                <div class="form-group">
+                </div> -->
+                <!-- Brand is temporarily unavailable -->
+                <!-- <div class="form-group">
                     <label>Brand</label>
                     <select name="brand_id" class="form-control" required>
                         <option value="">Choose the brand of the product</option>
@@ -131,8 +135,8 @@ include '../config/connection.php';
                         ?>
                     </select>
                    
-                </div>
-                <div class="form-group">
+                </div> -->
+                <!-- <div class="form-group">
                     <label>Category</label>
                     <select name="category_id"  class="form-control" required>
                         <option value="">Choose the category of the product</option>
@@ -147,14 +151,18 @@ include '../config/connection.php';
                             }
                             ?>
                     </select>
+                </div> -->
+                <div class="form-group">
+                    <label> Product Size </label>
+                    <input type="text" name="product_size" id="productSize" class="form-control" placeholder="Enter New Product Size">
                 </div>
                 <div class="form-group">
                     <label> Price </label>
-                    <input type="number" step="any" name="product_price" id="productPrice" class="form-control" placeholder="Enter Product Price" required>
+                    <input type="number" step="any" name="product_price" id="productPrice" class="form-control" placeholder="Enter New Product Price" required>
                 </div>
                 <div class="form-group">
                     <label> Quantity </label>
-                    <input type="number" name="product_quantity" id="productQuantity" class="form-control" placeholder="Enter Product Quantity" required>
+                    <input type="number" step="any" name="product_quantity" id="productQuantity" class="form-control" placeholder="Enter New Product Quantity" required>
                 </div>
                 
             </div>
@@ -168,7 +176,7 @@ include '../config/connection.php';
     </div>
     </div>
 
-    <!-- Delete Brand Modal -->
+    <!-- Delete Product Modal -->
     <div class="modal fade" id="deleteProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -179,7 +187,7 @@ include '../config/connection.php';
             </button>
         </div>
         
-        <form id="deleteBrand" action="../process/productProcess.php?action=delete" method="POST">
+        <form id="deleteProduct" action="../process/productProcess.php?action=delete" method="POST">
             
 
             <div class="modal-body">
@@ -217,33 +225,62 @@ include '../config/connection.php';
                             <tr>
                                 <th>Product ID</th>
                                 <th>Product Name</th>
-                                <th>Description</th>
+                                <!-- <th>Description</th> -->
                                 <th>Category</th>
-                                <th>Brand</th>
+                                <!-- <th>Brand</th> -->
+                                <th>Size</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Status</th>
                                 <th>changes</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             // Join Category and Brand table to Product table using INNER JOIN
-                                $sql = "SELECT * FROM product INNER JOIN brand ON product.brand_id = brand.brand_id 
-                                INNER JOIN category ON product.category_id = category.category_id ORDER BY product_id";
+                                $sql = "SELECT * FROM product INNER JOIN category ON product.category_id = category.category_id ORDER BY product_id";
                                 $result = mysqli_query($db, $sql) or die (mysqli_error($sql));
 
+                                // Check if there's a record in database
+                                if( mysqli_num_rows($result) == 0) {
+                                    $_SESSION['status'] = "No data found";
+                                    $_SESSION['status_code'] = "warning";
+                                } 
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
                                         <tr>
                                             <td><?php echo $row['product_id'] ?></td>
                                             <td><?php echo $row['product_name'] ?></td>
-                                            <td><?php echo $row['product_description'] ?></td>
+                                            <!-- <td><?php echo $row['product_description'] ?></td> -->
                                             <td><?php echo $row['category_name'] ?></td>
-                                            <td><?php echo $row['brand_name'] ?></td>
+                                            <td><?php
+                                            if ($row['product_size'] == 0 || $row['product_size'] == null) {
+                                                echo "N/A";
+                                            } else {
+                                                echo $row['product_size'];
+                                            }
+                                             
+                                             ?></td>
+<!--                                             <td><?php echo $row['brand_name'] ?></td> -->
                                             <td><?php echo $row['product_price'] ?></td>
                                             <td><?php echo $row['product_quantity'] ?></td>
-                                            <td><button class="btn editbtn btn-info">Edit</button>&nbsp
-                                            <button class="btn deletebtn btn-danger">Delete</button></td>
+                                            <td>
+                                                <!-- Check if the product quantity is available, not available or low stock -->
+                                                <?php                    
+                                                    if ($row['product_quantity'] == 0) { ?>
+                                                        <p class="px-2 py-2 bg-gradient-danger text-white">Not available</p>
+                                                        <?php
+                                                    } else if ($row['product_quantity'] <= 20) { ?>
+                                                        <p class="px-2 py-2 bg-gradient-warning text-black">Low stock</p>
+                                                        <?php
+                                                    } else { ?>
+                                                        <p class="px-2 py-2 bg-gradient-success text-black">Available</p>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td><button class="btn editbtn btn-info"><i class="far fa-edit"></i>Edit</button>&nbsp
+                                            <button class="btn deletebtn btn-danger"><i class="fas fa-trash-alt"></i>Delete</button></td>
                                         </tr>
                                     <?php
                                 }
@@ -280,13 +317,10 @@ include '../config/connection.php';
 
             $('#productId').val(data[0]);
             $('#productName').val(data[1]);
-            $('#productDescription').val(data[2]);
-            $('#brandId').val(data[3]);
-            $('#categoryId').val(data[4]);
-            $('#productPrice').val(data[5]);
-            $('#productQuantity').val(data[6]);
-            
-
+            $('#productSize').val(data[3]);
+            $('#productPrice').val(data[4]);
+            /* $('#productQuantity').val(data[5]); */
+             
         });
     });
 </script>

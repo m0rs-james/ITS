@@ -1,6 +1,4 @@
 <?php
-
-
 include '../includes/header.php';
 include '../includes/sidebar.html';
 include '../includes/topbar.php';
@@ -165,6 +163,11 @@ include '../config/connection.php';
                                 $sql = "SELECT * FROM users";
                                 $result = mysqli_query($db, $sql) or die (mysqli_error($db));
 
+                                // Check if there's a record in database
+                                if( mysqli_num_rows($result) == 0) {
+                                    $_SESSION['status'] = "No data found";
+                                    $_SESSION['status_code'] = "warning";
+                                } 
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
                                     <tr>
@@ -173,8 +176,8 @@ include '../config/connection.php';
                                         <td><?php echo $row['last_name'] ?></td>
                                         <td><?php echo $row['user_address'] ?></td>
                                         <td><?php echo $row['user_number'] ?></td>
-                                        <td><button class="btn editbtn btn-info">Edit</button>&nbsp
-                                        <button class="btn deletebtn btn-danger">Delete</button></td>
+                                        <td><button class="btn editbtn btn-info"><i class="far fa-edit"></i>Edit</button>&nbsp
+                                        <button class="btn deletebtn btn-danger"><i class="fas fa-trash-alt"></i>Delete</button></td>
                                     </tr>
                                     <?php
                                 }

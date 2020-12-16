@@ -1,6 +1,4 @@
 <?php
-
-
 include '../includes/header.php';
 include '../includes/sidebar.html';
 include '../includes/topbar.php';
@@ -28,8 +26,8 @@ include '../config/connection.php';
             <div class="modal-body">
 
                 <div class="form-group">
-                    <label> Brand Name </label>
-                    <input type="text" name="category_name" class="form-control" placeholder="Enter Brand Name" required>
+                    <label> Category Name </label>
+                    <input type="text" name="category_name" class="form-control" placeholder="Enter Category Name" required>
                 </div>
                 
             </div>
@@ -133,14 +131,19 @@ include '../config/connection.php';
                             $sql = "SELECT category_id, category_name FROM category";
                             $result = mysqli_query($db, $sql) or die (mysqli_error($db));
 
+                            // Check if there's a record in database
+                            if( mysqli_num_rows($result) == 0) {
+                                $_SESSION['status'] = "No data found";
+                                $_SESSION['status_code'] = "warning";
+                            } 
                             while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
 
                             <tr>
                                 <td><?php echo $row['category_id'] ?></td>
                                 <td><?php echo $row['category_name'] ?></td>
-                                <td><button type="button" class="btn editbtn btn-info" id="editbtn">Edit</button>
-                                &nbsp<button class="btn deletebtn btn-danger" id="deletebtn">Delete</button></td>
+                                <td><button type="button" class="btn editbtn btn-info" id="editbtn"><i class="far fa-edit"></i>Edit</button>
+                                &nbsp<button class="btn deletebtn btn-danger" id="deletebtn"><i class="fas fa-trash-alt"></i>Delete</button></td>
                             </tr>
                                 <?php    
                             }

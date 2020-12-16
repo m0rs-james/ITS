@@ -1,6 +1,4 @@
-<?php
-
-    
+<?php  
     include '../includes/header.php';
     include '../includes/sidebar.html';
     include '../includes/topbar.php';
@@ -83,22 +81,82 @@
             </div>
         </div> -->
 
+    <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+
+
+    <!-- Script for low stock -->
+    <script type="text/javascript">
+    $(function () {
+        $("a[class='lowstock']").click(function () {
+            $("#lowStock").modal("show");
+            return false;
+        });
+        });
+    </script>
+
+    <!-- View Low Stock Modal -->
+    <div class="modal fade" id="lowStock" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Low Stock Product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        <form action="../pages/product.php">
+            
+            <div class="modal-body">
+
+                    <?php
+                        $sql = "SELECT * FROM product WHERE product_quantity <= 20";
+                        $result = mysqli_query($db, $sql) or die (mysqli_error($db));
+                        
+                        while ($row = mysqli_fetch_assoc($result)) { ?>
+                            <p><?php echo $row['product_name'] . "\n"?></p>
+                            <?php
+                        }
+                    ?>    
+
+            </div>
+            <div class="modal-footer">
+                <h4>Do you want to re-stock?</h4> 
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="submit" name="deleteproductbtn" class="btn btn-danger">Yes</button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+    </div>
+
+    
+
         <!-- Pending Requests Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <!-- Clickable Card -->
-            <a href="../pages/orders.php">
+            <!-- inline css: remove the underline in the link and change the cursor to hand pointer -->
+            <a class="lowstock" style="cursor: pointer; text-decoration: none">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Pending Payments</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    Low stock</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <!-- Query to check for low product stock, if product is less than 20-->
+                                    <?php 
+                                        $sql = "SELECT * FROM product WHERE product_quantity <= 20";
+                                        $result = mysqli_query($db, $sql) or die (mysqli_error($db));
+                                        echo mysqli_num_rows($result);
+                                    ?>  
+                                </div>
                                 
                             </div>
                             <div class="col-auto">
-                                <i class="far fa-money-bill-alt fa-2x text-gray-300"></i>
+                                <i class="fa fa-shopping-basket fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>

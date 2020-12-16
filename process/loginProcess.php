@@ -1,14 +1,16 @@
 <?php
 
-    include '../config/connection.php';
+    session_start();
+    require '../config/connection.php';
+    require '../validation/validation.php';
 
     switch ($_GET['action']) {
 
         case 'add':
-            $employee = $_POST['employee_id'];
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $privilege = $_POST['privilege_id'];
+            $employee = validation($_POST['employee_id']);
+            $username = validation($_POST['username']);
+            $password = validation($_POST['password']);
+            $privilege = validation($_POST['privilege_id']);
 
             // Hash the password
             $hash_password = password_hash($password, PASSWORD_DEFAULT);
@@ -26,10 +28,10 @@
         break;
 
         case 'edit':
-            $id = $_POST['login_id'];
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $repeatPassword = $_POST['repeat_password'];
+            $id = validation($_POST['login_id']);
+            $username = validation($_POST['username']);
+            $password = validation($_POST['password']);
+            $repeatPassword = validation($_POST['repeat_password']);
 
             if ($password == $repeatPassword) {
                 $hash_password = password_hash($password, PASSWORD_DEFAULT);
@@ -54,7 +56,7 @@
         break;
 
         case 'delete':
-            $id = $_POST['login_id'];
+            $id = validation($_POST['login_id']);
 
             $stmt = "DELETE FROM login WHERE login_id = ?";
             $deleteStmt = mysqli_prepare($db, $stmt);
@@ -96,13 +98,13 @@
 
                     $_SESSION['status'] = "Login Failed: Incorrect Password";
                     $_SESSION['status_code'] = "error";
-                    header("Location: ../index.php");
+                    header("Location: ../pages/login.php");
                 }
 
             } else {
                 $_SESSION['status'] = "Invalid Username or Password";
                 $_SESSION['status_code'] = "error";
-                header("Location: ../index.php");
+                header("Location: ../pages/login.php");
             }
         break;
 

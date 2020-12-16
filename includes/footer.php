@@ -33,8 +33,8 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     
-                    <form action="../pages/logout.php?action=logout" method="POST">
-                        <button type="submit" class="btn btn-primary">Logout</button>
+                    <form action="../pages/logout.php" method="POST">
+                        <button type="submit" name="logout" class="btn btn-primary">Logout</button>
                     </form>
                     
                 </div>

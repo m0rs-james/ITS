@@ -1,10 +1,13 @@
 <?php
+    
+    session_start();
 
-    switch ($_GET['action']) {
-        case 'logout':
-            session_destroy();
-            unset($_SESSION['login_id']);
+    if (isset($_POST['logout'])) {
 
-            header("Location: ../index.php");
-        break;
+        session_destroy();
+        unset($_SESSION['login_id']);
+        unset($_SESSION['name']);
+        unset($_SESSION['type']);
+
+        header("Location: ../index.php");
     }

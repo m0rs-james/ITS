@@ -1,21 +1,21 @@
 <?php
 
-    include '../config/connection.php';
+    require '../config/connection.php';
+    require '../validation/validation.php';
 
     switch ($_GET['action']) {
         
         case 'add':
-            $name = $_POST['product_name'];
-            $description = $_POST['product_description'];
-            $category = $_POST['category_id'];
-            $brand = $_POST['brand_id'];
-            $price = $_POST['product_price'];
-            $quantity = $_POST['product_quantity'];
+            $name = validation($_POST['product_name']);
+            $category = validation($_POST['category_id']);
+            $size = validation($_POST['product_size']);
+            $price = validation($_POST['product_price']);
+            $quantity = validation($_POST['product_quantity']);
+            $login_id = $_SESSION['login_id'];
 
-            $stmt = "INSERT INTO product (category_id, brand_id, product_name, 
-            product_description, product_quantity, product_price) VALUES (?,?,?,?,?,?)";
+            $stmt = "INSERT INTO product (category_id, product_name, product_size, product_quantity, product_price, login_id) VALUES (?,?,?,?,?,?)";
             $insertStmt = mysqli_prepare($db, $stmt);
-            mysqli_stmt_bind_param($insertStmt, 'iissid', $category, $brand, $name, $description, $quantity, $price);
+            mysqli_stmt_bind_param($insertStmt, 'issidi', $category, $name, $size, $quantity, $price, $login_id);
             mysqli_stmt_execute($insertStmt) or die ('Error in updating database ' . mysqli_error($db));
 
             mysqli_close($db);
@@ -26,20 +26,22 @@
         break;
 
         case 'edit':
-            $id = $_POST['product_id'];
-            $name = $_POST['product_name'];
-            $description = $_POST['product_description'];
-            $category = $_POST['category_id'];
-            $brand = $_POST['brand_id'];
-            $price = $_POST['product_price'];
-            $quantity = $_POST['product_quantity'];
+            $id = validation($_POST['product_id']);
+            $name = validation($_POST['product_name']);
+            $category = validation($_POST['category_id']);
+            $size = validation($_POST['product_size']);
+            $price = validation($_POST['product_price']);
+            $quantity = validation($_POST['product_quantity']);
+            $login_id = $_SESSION['login_id'];
 
-            $stmt = "UPDATE product SET category_id = ?, brand_id = ?, product_name = ?, product_description = ?,  
-             product_quantity = ?, product_price = ? WHERE product_id = ?";
+            // update product: product quantity will get updated by adding the 
+            // quantity stored in the database plus the new quantity 
+            $stmt = "UPDATE product SET product_name = ?, product_size = ?, 
+            product_quantity = product_quantity + ?, product_price = ?, login_id = ? WHERE product_id = ?";
             $updateStmt = mysqli_prepare($db, $stmt);
-            mysqli_stmt_bind_param($updateStmt, 'iissidi', $category, $brand, $name, $description, $quantity, $price, $id);
+            mysqli_stmt_bind_param($updateStmt, 'ssidii', $name, $size, $quantity, $price, $login_id, $id);
             mysqli_stmt_execute($updateStmt) or die ('Error in updating database ' . mysqli_error($db));
-
+            
             mysqli_close($db);
 
             $_SESSION['status'] = "Product has been updated";
@@ -48,7 +50,7 @@
         break;
 
         case 'delete':
-            $id = $_POST['product_id'];
+            $id = validation($_POST['product_id']);
             $stmt = "DELETE FROM product WHERE product_id = ?";
             $deleteStmt = mysqli_prepare($db, $stmt);
             mysqli_stmt_bind_param($deleteStmt, 'i', $id);

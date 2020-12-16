@@ -1,12 +1,13 @@
 <?php
 
-    include '../config/connection.php';
+    require '../config/connection.php';
+    require '../validation/validation.php';
 
 
     switch ($_GET['action']) {
 
         case 'add':
-            $name = $_POST['brand_name'];
+            $name = validation($_POST['brand_name']);
             $stmt = "INSERT INTO brand (brand_name) VALUES (?)";
             $insertStmt = mysqli_prepare($db, $stmt);
             mysqli_stmt_bind_param($insertStmt, 's', $name);
@@ -20,8 +21,8 @@
         break;
 
         case 'edit':
-            $id = $_POST['brand_id'];
-            $name = $_POST['brand_name'];
+            $id = validation($_POST['brand_id']);
+            $name = validation($_POST['brand_name']);
             $stmt = "UPDATE brand SET brand_name = ? WHERE brand_id = ?";
             $updateStmt = mysqli_prepare($db, $stmt);
             mysqli_stmt_bind_param($updateStmt, 'si', $name, $id);
@@ -35,7 +36,7 @@
         break;
 
         case 'delete':
-            $id = $_POST['brand_id'];
+            $id = validation($_POST['brand_id']);
             $stmt = "DELETE FROM brand WHERE brand_id = ?";
             $deleteStmt = mysqli_prepare($db, $stmt);
             mysqli_stmt_bind_param($deleteStmt, 'i', $id);

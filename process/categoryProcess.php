@@ -1,14 +1,16 @@
 <?php 
 
-    include '../config/connection.php';
+    require '../config/connection.php';
+    require '../validation/validation.php';
 
     switch ($_GET['action']) {
         
         case 'add':
-            $name = $_POST['category_name'];
-            $stmt = "INSERT INTO category (category_name) VALUES (?)";
+            $name = validation($_POST['category_name']);
+            $login_id = $_SESSION['login_id'];
+            $stmt = "INSERT INTO category (category_name, login_id) VALUES (?, ?)";
             $insertStmt = mysqli_prepare($db, $stmt);
-            mysqli_stmt_bind_param($insertStmt, 's', $name);
+            mysqli_stmt_bind_param($insertStmt, 'si', $name, $login_id);
             mysqli_stmt_execute($insertStmt) or die ('Error in updating database ' . mysqli_error($db));
 
             mysqli_close($db);
@@ -19,8 +21,8 @@
         break;
 
         case 'edit':
-            $id = $_POST['category_id'];
-            $name = $_POST['category_name'];
+            $id = validation($_POST['category_id']);
+            $name = validation($_POST['category_name']);
             $stmt = "UPDATE category SET category_name = ? WHERE category_id = ?";
             $updateStmt = mysqli_prepare($db, $stmt);
             mysqli_stmt_bind_param($updateStmt, 'si', $name, $id);
@@ -34,7 +36,7 @@
         break;
 
         case 'delete':
-            $id = $_POST['category_id'];
+            $id = validation($_POST['category_id']);
             $stmt = "DELETE FROM category WHERE category_id = ?";
             $deleteStmt = mysqli_prepare($db, $stmt);
             mysqli_stmt_bind_param($deleteStmt, 'i', $id);

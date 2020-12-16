@@ -1,6 +1,4 @@
 <?php
-
-
 include '../includes/header.php';
 include '../includes/sidebar.html';
 include '../includes/topbar.php';
@@ -136,6 +134,11 @@ include '../config/connection.php';
                                 $sql = "SELECT brand_id, brand_name FROM brand";
                                 $result = mysqli_query($db, $sql) or die (mysqli_error($db));
 
+                                // Check if there's a record in database
+                                if( mysqli_num_rows($result) == 0) {
+                                    $_SESSION['status'] = "No data found";
+                                    $_SESSION['status_code'] = "warning";
+                                } 
                                 while ($row = mysqli_fetch_assoc($result)) {    
                             ?>
                             <tr>
