@@ -1,6 +1,9 @@
 <?php
+// for navigation active link
+$page = "sales";
+
 include '../includes/header.php';
-include '../includes/sidebar.html';
+include '../includes/sidebar.php';
 include '../includes/topbar.php';
 
 include '../config/connection.php';
@@ -15,7 +18,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Category Data</h5>
+        <div class="col-auto">
+            <i class="fa fa-plus-circle fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -47,7 +53,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Update Category Data</h5>
+        <div class="col-auto">
+            <i class="fa fa-wrench fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Update Category</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -81,7 +90,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete Category Data</h5>
+        <div class="col-auto">
+            <i class="fas fa-trash-alt fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Delete Category</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -92,7 +104,7 @@ include '../config/connection.php';
             <div class="modal-body">
 
                 <input type="hidden" name="category_id" id="deleteId">
-                <h4>Do you want to delete this category?</h4>
+                <h4>Do you really want to delete this category?</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
@@ -117,7 +129,7 @@ include '../config/connection.php';
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="categoryTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Category ID</th>
@@ -142,8 +154,8 @@ include '../config/connection.php';
                             <tr>
                                 <td><?php echo $row['category_id'] ?></td>
                                 <td><?php echo $row['category_name'] ?></td>
-                                <td><button type="button" class="btn editbtn btn-info" id="editbtn"><i class="far fa-edit"></i>Edit</button>
-                                &nbsp<button class="btn deletebtn btn-danger" id="deletebtn"><i class="fas fa-trash-alt"></i>Delete</button></td>
+                                <td><button type="button" class="btn editbtn btn-info btn-sm" id="editbtn"><i class="far fa-edit"></i>Edit</button>
+                                &nbsp<button class="btn deletebtn btn-danger btn-sm" id="deletebtn"><i class="fas fa-trash-alt"></i>Delete</button></td>
                             </tr>
                                 <?php    
                             }
@@ -167,11 +179,17 @@ include '../config/connection.php';
 <?php
     include '../includes/scripts2.php';
 ?>
+<!-- DataTable -->
+<script>
+    $(document).ready(function() {
+        $('#categoryTable').DataTable();
+    } );
+</script>
 
 <!-- Edit script (jQuery) -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.editbtn').on('click', function() {
+        $('#categoryTable').on('click', '.editbtn', function() {
             $('#editCategory').modal('show');
 
                 $tr = $(this).closest('tr');
@@ -191,7 +209,7 @@ include '../config/connection.php';
 <!-- Delete script (jQuery) -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.deletebtn').on('click', function() {
+        $('#categoryTable').on('click', '.deletebtn', function() {
             $('#deleteCategory').modal('show');
 
                 $tr = $(this).closest('tr');
@@ -207,6 +225,9 @@ include '../config/connection.php';
         });
     });
 </script>
+
+
+
 
 <?php
     include '../includes/footer.php';

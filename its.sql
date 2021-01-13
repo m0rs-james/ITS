@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2020 at 10:00 AM
+-- Generation Time: Dec 16, 2020 at 09:40 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.11
 
@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `its`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `brand`
+--
+
+CREATE TABLE `brand` (
+  `brand_id` int NOT NULL,
+  `brand_name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -261,6 +272,12 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `user_address`, `user
 --
 
 --
+-- Indexes for table `brand`
+--
+ALTER TABLE `brand`
+  ADD PRIMARY KEY (`brand_id`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
@@ -319,6 +336,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `brand`
+--
+ALTER TABLE `brand`
+  MODIFY `brand_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `category`

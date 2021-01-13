@@ -13,6 +13,9 @@ include '../config/connection.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- Website icon -->
+    <link rel="shortcut icon" href="../img/logo.jpg">
+
     <title>Sales and Product Monitoring</title>
 
     <!-- Custom fonts for this template-->
@@ -23,6 +26,7 @@ include '../config/connection.php';
 
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
 

@@ -10,13 +10,32 @@
             $lastName = validation($_POST['last_name']);
             $address = validation($_POST['user_address']);
             $phoneNumber = validation($_POST['user_number']);
-
-
+            
             $stmt = "INSERT INTO users (first_name, last_name, user_address, user_number)
             VALUES (?, ?, ?, ?)";
             $insertStmt = mysqli_prepare($db, $stmt);
             mysqli_stmt_bind_param($insertStmt, 'ssss', $firstName, $lastName, $address, $phoneNumber);
-            mysqli_stmt_execute($insertStmt) or die ('Error in updating database ' . mysqli_error($db));
+
+            // Check if the previous statement is executed
+            if (mysqli_stmt_execute($insertStmt) === true) {
+
+                // Get the user details 
+                $checkUser = "SELECT * FROM login INNER JOIN users ON login.user_id = users.user_id
+                INNER JOIN privileges ON login.privileges_id = privileges.privileges_id WHERE login_id = ". $login_id;
+                $checkUserResult = mysqli_query($db, $checkUser);
+                $result = mysqli_fetch_assoc($checkUserResult);
+
+                // Initialize 
+                $name = $result['first_name'] . " " . $result['last_name'];
+                $privilege = $result['privileges_name'];
+                $area = "Category";
+                $description = $name . " has added new category: " . $categoryName;
+                // Insert activity to the database
+                $addActivity = "INSERT INTO activityLog (permission, user, area, description) VALUES (?, ?, ?, ?)";
+                $addActivityStmt = mysqli_prepare($db, $addActivity);
+                mysqli_stmt_bind_param($addActivityStmt, 'ssss', $privilege, $name, $area, $description);
+                mysqli_stmt_execute($addActivityStmt) or die ('Error in updating database ' . mysqli_error($db));
+            }
 
             mysqli_close($db);
 

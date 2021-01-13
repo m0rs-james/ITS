@@ -1,6 +1,9 @@
 <?php
+// for navigation active link
+$page = "sales";
+
 include '../includes/header.php';
-include '../includes/sidebar.html';
+include '../includes/sidebar.php';
 include '../includes/topbar.php';
 
 include '../config/connection.php';
@@ -15,7 +18,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Product Data</h5>
+        <div class="col-auto">
+            <i class="fa fa-plus-circle fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -97,7 +103,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Update Product Data</h5>
+        <div class="col-auto">
+            <i class="fa fa-wrench fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -181,7 +190,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete Product Data</h5>
+        <div class="col-auto">
+            <i class="fas fa-trash-alt fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -194,7 +206,7 @@ include '../config/connection.php';
 
                 <input type="hidden" name="product_id" id="deleteId">
 
-                <h4>Do you want to delete this Product?</h4>
+                <h4>Do you really want to delete this Product?</h4>
                 
             </div>
             <div class="modal-footer">
@@ -220,14 +232,12 @@ include '../config/connection.php';
             <div class="card-body">
                 <div class="table-responsive">
 
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="productTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Product ID</th>
                                 <th>Product Name</th>
-                                <!-- <th>Description</th> -->
                                 <th>Category</th>
-                                <!-- <th>Brand</th> -->
                                 <th>Size</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
@@ -254,12 +264,12 @@ include '../config/connection.php';
                                             <!-- <td><?php echo $row['product_description'] ?></td> -->
                                             <td><?php echo $row['category_name'] ?></td>
                                             <td><?php
-                                            if ($row['product_size'] == 0 || $row['product_size'] == null) {
+                                            /* if ($row['product_size'] == 0 || $row['product_size'] == null) {
                                                 echo "N/A";
                                             } else {
                                                 echo $row['product_size'];
-                                            }
-                                             
+                                            } */
+                                            echo $row['product_size']
                                              ?></td>
 <!--                                             <td><?php echo $row['brand_name'] ?></td> -->
                                             <td><?php echo $row['product_price'] ?></td>
@@ -279,8 +289,8 @@ include '../config/connection.php';
                                                     }
                                                 ?>
                                             </td>
-                                            <td><button class="btn editbtn btn-info"><i class="far fa-edit"></i>Edit</button>&nbsp
-                                            <button class="btn deletebtn btn-danger"><i class="fas fa-trash-alt"></i>Delete</button></td>
+                                            <td><button class="btn editbtn btn-info btn-sm"><i class="far fa-edit"></i>Edit</button>&nbsp
+                                            <button class="btn deletebtn btn-danger btn-sm"><i class="fas fa-trash-alt"></i>Delete</button></td>
                                         </tr>
                                     <?php
                                 }
@@ -301,10 +311,17 @@ include '../config/connection.php';
     include '../includes/scripts2.php';
 ?>
 
+<!-- DataTable -->
+<script>
+    $(document).ready(function() {
+        $('#productTable').DataTable();
+    } );
+</script>
+
 <!-- Edit script (jQuery) -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.editbtn').on('click', function() {
+        $('#productTable').on('click', '.editbtn', function() {
             $('#editProduct').modal('show');
 
             $tr = $(this).closest('tr');
@@ -328,7 +345,7 @@ include '../config/connection.php';
 <!-- Delete script (jQuery) -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.deletebtn').on('click', function() {
+        $('#productTable').on('click', '.deletebtn', function() {
             $('#deleteProduct').modal('show');
 
             $tr = $(this).closest('tr');
@@ -343,16 +360,6 @@ include '../config/connection.php';
         });
     });
 </script>
-
-<!-- Editable Select -->
-<!-- <script src="//code.jquery.com/jquery-latest.min.js"></script> -->
-<!-- <script src="jquery.editable-select.js"></script>
-<script type="text/javascript">
-  
-        $('#brandId').editableSelect();
-        $('#categoryId').editableSelect();
-
-</script> -->
 
 <!-- End of contatiner fluid -->
 

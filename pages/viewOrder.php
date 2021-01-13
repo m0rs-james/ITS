@@ -1,6 +1,9 @@
 <?php
+// for navigation active link
+$page = "sales";
+
 include '../includes/header.php';
-include '../includes/sidebar.html';
+include '../includes/sidebar.php';
 include '../includes/topbar.php';
 
 include '../config/connection.php';
@@ -26,7 +29,7 @@ if (isset($_GET['id'])) {
             </div>
 
             <div style="padding: 10px 10px 10px 10px" class="form-inline">
-                <label style="padding-right: 65px" >Sales ID:</label>
+                <label style="padding-right: 54px" >Receipt #:</label>
                 <input type="text" name="sales_id" id="viewId" class="form-control" readonly="true" value="<?php echo $row['sales_id'] ?>">
             </div>
 
@@ -34,6 +37,17 @@ if (isset($_GET['id'])) {
                 <label style="padding-right: 5px">Customer Name:</label>
                 <input type="text" name="customer_name" id="customerName" class="form-control" readonly="true" value="<?php echo $row['customer_name'] ?>">
             </div>
+
+            <div style="padding: 0px 10px 10px 10px" class="form-inline">
+                <label style="padding-right: 64px">Address:</label>
+                <input type="text" name="address" id="address" class="form-control" readonly="true" value="<?php echo $row['address'] ?>">
+            </div>
+
+            <div style="padding: 0px 10px 10px 10px" class="form-inline">
+                <label style="padding-right: 88px">Date:</label>
+                <input type="text" name="date" id="date" class="form-control" readonly="true" value="<?php $date = new DateTime($row['sales_date']); echo $date->format('F j, Y'); ?>">
+            </div>
+
             <div class="card-body">
                 <div class="table-responsive">
 
@@ -58,8 +72,8 @@ if (isset($_GET['id'])) {
                     <tr>
                         <td><?php echo $viewRows['product_name'] ?></td>
                         <td><?php echo $viewRows['quantity'] ?></td>
-                        <td><?php echo $viewRows['product_price'] ?></td>
-                        <td><?php echo $viewRows['quantity'] * $viewRows['product_price'] ?></td>
+                        <td>₱ <?php echo $viewRows['product_price'] ?></td>
+                        <td>₱ <?php echo $viewRows['quantity'] * $viewRows['product_price'] ?></td>
                     </tr>
                     <?php
                         }
@@ -79,9 +93,9 @@ if (isset($_GET['id'])) {
 
 </div>
     <div class="modal-footer">
-        <h5>Do you want to send to shipment?</h5> 
+        <h5>Do you want to generate a receipt?</h5> 
         <a href="../pages/sales.php" class="btn btn-secondary" style="cursor: pointer; text-decoration: none">No</a>
-        <button type="submit" name="deleteproductbtn" class="btn btn-danger">Yes</button>
+        <a href="../pages/generate_receipt.php?id=<?php echo $id ?>" class="btn btn-danger" style="cursor: pointer; text-decoration: none">Yes</a>
     </div>
 </div>
 

@@ -1,6 +1,12 @@
 <?php
+
+use function PHPSTORM_META\type;
+
+// for navigation active link
+$page = "account";
+
 include '../includes/header.php';
-include '../includes/sidebar.html';
+include '../includes/sidebar.php';
 include '../includes/topbar.php';
 
 include '../config/connection.php';
@@ -15,7 +21,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Login Data</h5>
+        <div class="col-auto">
+            <i class="fa fa-plus-circle fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Add Login</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -83,7 +92,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Update Login Data</h5>
+        <div class="col-auto">
+            <i class="fa fa-wrench fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Update Login</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -126,7 +138,10 @@ include '../config/connection.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete Login Data</h5>
+        <div class="col-auto">
+            <i class="fas fa-trash-alt fa-2x ml-n3"></i>
+        </div>
+            <h5 class="modal-title" id="exampleModalLabel">Delete Login</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -139,7 +154,7 @@ include '../config/connection.php';
 
                 <input type="hidden" name="login_id" id="deleteId">
 
-                <h4>Do you want to delete this Login?</h4>
+                <h4>Do you really want to delete this Login?</h4>
                 
             </div>
             <div class="modal-footer">
@@ -165,7 +180,7 @@ include '../config/connection.php';
             <div class="card-body">
                 <div class="table-responsive">
 
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="loginTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Login ID</th>
@@ -195,8 +210,8 @@ include '../config/connection.php';
                                         <td><?php echo $row['username'] ?></td>
                                         <td><?php echo $row['password'] ?></td>
                                         <td><?php echo $row['privileges_name'] ?></td>
-                                        <td><button class="btn editbtn btn-info"><i class="far fa-edit"></i>Edit</button>&nbsp
-                                        <button class="btn deletebtn btn-danger"><i class="fas fa-trash-alt"></i>Delete</button></td>
+                                        <td><button class="btn editbtn btn-info btn-sm"><i class="far fa-edit"></i>Edit</button>&nbsp
+                                        <button class="btn deletebtn btn-danger btn-sm"><i class="fas fa-trash-alt"></i>Delete</button></td>
                                     </tr>
                                     <?php
                                 }
@@ -221,7 +236,7 @@ include '../config/connection.php';
 <!-- Edit Script (jQuery) -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.editbtn').on('click', function() {
+        $('#loginTable').on('click', '.editbtn', function() {
             $('#editLogin').modal('show');
 
             $tr = $(this).closest('tr');
@@ -245,7 +260,7 @@ include '../config/connection.php';
 <!-- Delete script (jQuery) -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.deletebtn').on('click', function() {
+        $('#loginTable').on('click', '.deletebtn', function() {
             $('#deleteLogin').modal('show');
 
             $tr = $(this).closest('tr');
@@ -259,6 +274,13 @@ include '../config/connection.php';
             $('#deleteId').val(data[0]);
         });
     });
+</script>
+
+<!-- DataTable -->
+<script>
+    $(document).ready(function() {
+        $('#loginTable').DataTable();
+    } );
 </script>
 
 <!-- End of contatiner fluid -->
