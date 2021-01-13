@@ -17,6 +17,7 @@ if (isset($_GET['id'])) {
     $address = $rows->address;
     $date = new DateTime($rows->sales_date);
     $totalPrice = $rows->totalPrice;
+    $tPrice = number_format($totalPrice, 2);
 
 
     $pdf =  new FPDF();
@@ -60,17 +61,20 @@ if (isset($_GET['id'])) {
         $price = $row->product_price;
         $subTotal = $row->quantity * $row->product_price;
 
+        $p = number_format($price, 2);
+        $sTotal = number_format($subTotal, 2);
+
         $pdf->SetFont("Arial", "", 10);    
         $pdf->Cell(90, 10, $productName, 1, 0, 'C');
         $pdf->Cell(40, 10, $quantity, 1, 0, 'C');
-        $pdf->Cell(30, 10, $price, 1, 0, 'C');
-        $pdf->Cell(30, 10, $subTotal, 1, 1, 'C'); 
+        $pdf->Cell(30, 10, $p, 1, 0, 'C');
+        $pdf->Cell(30, 10, $sTotal, 1, 1, 'C'); 
         
          
     }
     $pdf->SetFont("Arial", "B", 10);
     $pdf->Cell(160, 10, "Total:", 0, 0, 'R');
-    $pdf->Cell(30, 10, $totalPrice, 1, 1, 'C');
+    $pdf->Cell(30, 10, $tPrice, 1, 1, 'C');
 
    $pdf->Output();
 }

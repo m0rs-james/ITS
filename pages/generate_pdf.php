@@ -38,7 +38,7 @@ include_once('../fpdf/fpdf.php');
         $date2 = new DateTime($selectedDay);
         
         // convert to number format
-        $tS = number_format($totalSales);
+        $tS = number_format($totalSales, 2);
         $tSP = number_format($totalProductSold);
 
         if ($selectedDay === $dateInDB) {
@@ -92,11 +92,13 @@ include_once('../fpdf/fpdf.php');
                 $productName = $row1->product_name;
                 $totalQ = $row->totalQuantity;
                 $totalPr = $row->totalPrice;
+
+                $totalPriceFormat = number_format($totalPr, 2);
         
                 $pdf->SetFont("Arial", "", 8);
                 $pdf->Cell(100,10,$productName,1,0,'C');
                 $pdf->Cell(50,10,$totalQ,1,0,'C');
-                $pdf->Cell(40,10,$totalPr,1,1,'C');
+                $pdf->Cell(40,10,$totalPriceFormat,1,1,'C');
             }
           
            $pdf->Output();
@@ -142,7 +144,7 @@ include_once('../fpdf/fpdf.php');
         $date2 = new DateTime($selectedDay);
         
         // convert to number format
-        $tS = number_format($totalSales);
+        $tS = number_format($totalSales, 2);
         $tSP = number_format($totalProductSold);
 
         if ($totalSales != 0) {
@@ -196,11 +198,13 @@ include_once('../fpdf/fpdf.php');
                 $productName = $row1->product_name;
                 $totalQ = $row->totalQuantity;
                 $totalPr = $row->totalPrice;
+
+                $totalPriceFormat = number_format($totalPr, 2);
     
                 $pdf->SetFont("Arial", "", 8);
                 $pdf->Cell(100,10,$productName,1,0,'C');
                 $pdf->Cell(50,10,$totalQ,1,0,'C');
-                $pdf->Cell(40,10,$totalPr,1,1,'C');
+                $pdf->Cell(40,10,$totalPriceFormat,1,1,'C');
             }
         
         $pdf->Output();
@@ -244,7 +248,7 @@ include_once('../fpdf/fpdf.php');
         $date2 = new DateTime($selectedDay);
         
         // convert to number format
-        $tS = number_format($totalSales);
+        $tS = number_format($totalSales, 2);
         $tSP = number_format($totalProductSold);
 
         if ($totalSales != 0) {
@@ -298,11 +302,13 @@ include_once('../fpdf/fpdf.php');
                 $productName = $row1->product_name;
                 $totalQ = $row->totalQuantity;
                 $totalPr = $row->totalPrice;
+
+                $totalPriceFormat = number_format($totalPr, 2);
     
                 $pdf->SetFont("Arial", "", 8);
                 $pdf->Cell(100,10,$productName,1,0,'C');
                 $pdf->Cell(50,10,$totalQ,1,0,'C');
-                $pdf->Cell(40,10,$totalPr,1,1,'C');
+                $pdf->Cell(40,10,$totalPriceFormat,1,1,'C');
             }
         
         $pdf->Output();
@@ -344,7 +350,7 @@ include_once('../fpdf/fpdf.php');
         $date2 = new DateTime($selectedDayTo);
         
         // convert to number format
-        $tS = number_format($totalSales);
+        $tS = number_format($totalSales, 2);
         $tSP = number_format($totalProductSold);
 
         if ($totalSales != 0) {
@@ -398,11 +404,13 @@ include_once('../fpdf/fpdf.php');
                 $productName = $row1->product_name;
                 $totalQ = $row->totalQuantity;
                 $totalPr = $row->totalPrice;
+
+                $totalPriceFormat = number_format($totalPr, 2);
         
                 $pdf->SetFont("Arial", "", 8);
                 $pdf->Cell(100,10,$productName,1,0,'C');
                 $pdf->Cell(50,10,$totalQ,1,0,'C');
-                $pdf->Cell(40,10,$totalPr,1,1,'C');
+                $pdf->Cell(40,10,$totalPriceFormat,1,1,'C');
             }
           
            $pdf->Output();

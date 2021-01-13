@@ -215,7 +215,7 @@ include '../config/connection.php';
                                 <th>Address</th>
                                 <th width="1%">Total Product</th>
                                 <th width="1%">Total Quantity</th>
-                                <th width="1%">Total Price</th>
+                                <th >Total Price</th>
                                 <th>Sales Date</th>
                                 <th>Status</th>
                                 <th width="12%">changes</th>
@@ -243,7 +243,7 @@ include '../config/connection.php';
                                         <td><?php echo $row['address'] ?></td>
                                         <td><?php echo $row['productTotal'] ?></td>
                                         <td><?php echo $row['totalQuantity'] ?></td>
-                                        <td>₱ <?php echo number_format($row['totalPrice']) ?></td>
+                                        <td>₱ <?php echo number_format($row['totalPrice'], 2) ?></td>
                                         <!-- format date to example: Dec 12, 2020 -->
                                         <td><?php $date = new DateTime($row['sales_date']); echo $date->format('F j, Y'); ?></td>
                                         <!-- sales Status -->

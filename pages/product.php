@@ -272,7 +272,7 @@ include '../config/connection.php';
                                             echo $row['product_size']
                                              ?></td>
 <!--                                             <td><?php echo $row['brand_name'] ?></td> -->
-                                            <td><?php echo $row['product_price'] ?></td>
+                                            <td><?php echo number_format($row['product_price'], 2) ?></td>
                                             <td><?php echo $row['product_quantity'] ?></td>
                                             <td>
                                                 <!-- Check if the product quantity is available, not available or low stock -->

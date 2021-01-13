@@ -16,6 +16,8 @@ if (isset($_GET['id'])) {
     INNER JOIN product ON sales_products.product_id = product.product_id WHERE sales.sales_id = ". $id;
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($result);
+
+    $tPrice = $row['totalPrice'];
 ?>
 
 <div id="content-wrapper" class="d-flex flex-column">
@@ -72,8 +74,8 @@ if (isset($_GET['id'])) {
                     <tr>
                         <td><?php echo $viewRows['product_name'] ?></td>
                         <td><?php echo $viewRows['quantity'] ?></td>
-                        <td>₱ <?php echo $viewRows['product_price'] ?></td>
-                        <td>₱ <?php echo $viewRows['quantity'] * $viewRows['product_price'] ?></td>
+                        <td>₱ <?php echo number_format($viewRows['product_price'], 2) ?></td>
+                        <td>₱ <?php echo number_format($viewRows['quantity'] * $viewRows['product_price'], 2) ?></td>
                     </tr>
                     <?php
                         }
@@ -83,7 +85,7 @@ if (isset($_GET['id'])) {
             <div class="float-right">
                 <div class="form-inline">
                     <h5 style="padding-right: 15px">Total:</h5>
-                    <input type="number" name="quantity" id="quantity" class="form-control" value="<?php echo $row['totalPrice'] ?>" readonly="true">
+                    <input type="number" name="quantity" id="quantity" class="form-control" value="<?php echo $tPrice ?>" readonly="true">
                 </div>
             </div>
             </div>
